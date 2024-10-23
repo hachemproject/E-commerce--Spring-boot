@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Produits</title>
+</head>
+<body>
+    <h1>Liste des Produits</h1>
+	<a th:href="@{/a/create}" class="btn btn-primary">AJOUTER PRODUIT</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prix</th>
+				<th>brand</th>
+				<th>category</th>
+				<th>description</th>
+				<th>createdAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="prod : ${a}">
+                <td th:text="${prod.id}"></td>
+                <td th:text="${prod.name}"></td>
+                <td th:text="${prod.price}"></td>
+				<td th:text="${prod.brand}"></td>
+				<td th:text="${prod.category}"></td>
+				<td th:text="${prod.description}"></td>
+				<td th:text="${prod.createdAt}"></td>
+
+				<td>
+					<a th:href="@{/a/edit/{id}(id=${prod.id})}" class="btn btn-primary">Edit</a>
+			    </td>
+				<td>
+				  <a th:href="@{/a/delete(id=${prod.id})}" class="btn btn-primary" 
+				  onclick="return confirm('Are you Sure?')">delit</a>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

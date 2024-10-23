@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un produit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4 mb-4">Modifier un produit</h2>
+        <form th:action="@{/a/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+            <div class="form-group">
+                <label for="name">Nom du produit</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Marque</label>
+                <input type="text" id="brand" class="form-control" th:field="*{brand}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Catégorie</label>
+                <input type="text" id="category" class="form-control" th:field="*{category}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Prix</label>
+                <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" th:field="*{description}" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="createdAt">Date de création</label>
+                <input type="date" id="createdAt" class="form-control" th:field="*{createdAt}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Modifier le produit</button>
+        </form>
+    </div>
+</body>
+</html>
