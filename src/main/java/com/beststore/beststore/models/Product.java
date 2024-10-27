@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +20,11 @@ public class Product {
 	
 	private String name;
 	private String brand;
-	private String category;
+	
+	
+	@ManyToOne
+    private Category cat;
+
 	private double price;
 	
 	@Column(columnDefinition="TEXT")
@@ -44,11 +49,11 @@ public class Product {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public String getCategory() {
-		return category;
+	public Category getCategory() {
+		return cat;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategory(Category cat) {
+		this.cat = cat;
 	}
 	public double getPrice() {
 		return price;

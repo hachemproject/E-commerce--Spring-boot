@@ -1,6 +1,7 @@
 package com.beststore.beststore.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beststore.beststore.models.Product;
+import com.beststore.beststore.models.Category;
+import com.beststore.beststore.models.CategoryDTO;
 import com.beststore.beststore.models.ProductDto;
+import com.beststore.beststore.service.CategoryRepository;
 import com.beststore.beststore.service.ProductsRepository;
 
 @Controller
@@ -24,15 +29,44 @@ public class ProductsController {
 	@Autowired
 	private ProductsRepository repo;
 	
-	@GetMapping({"","/"})
-	public String showProductList(Model model) {
-	    List<Product> c = repo.findAll(); // Récupération de tous les produits
-	    model.addAttribute("a", c); // Ajout de la liste des produits au modèle
-	    return "products/index"; // Chemin vers la vue
-	}
-	
-	
+	@Autowired
+	private CategoryRepository cate;
 
+	
+	
+	@GetMapping({"", "/"})
+	public String showProductList(Model model) {
+	    List<Product> products = repo.findAll();
+	    List<ProductDto> productDTOs = products.stream().map(this::convertToDTO).collect(Collectors.toList());
+	    model.addAttribute("product", productDTOs); 
+	    return "client/accueil"; 
+	}
+
+	private ProductDto convertToDTO(Product product) {
+	    ProductDto dto = new ProductDto();
+	    dto.setId(product.getId());
+	    dto.setName(product.getName());
+	    dto.setBrand(product.getBrand());
+	    dto.setPrice(product.getPrice());
+	    dto.setDescription(product.getDescription());
+	    dto.setCreatedAt(product.getCreatedAt());
+	    dto.setImageFileName(product.getImageFileName());
+	    
+	    CategoryDTO categoryDto = new CategoryDTO();
+	    categoryDto.setId(product.getCategory().getId());
+	    categoryDto.setName(product.getCategory().getName());
+	    dto.setCategory(categoryDto);
+	    
+	    return dto;
+	}
+
+	
+	@GetMapping("/categories")  // Meilleur chemin pour accéder aux catégories
+	public String showProductCategories(Model model) {
+	    List<Category> categories = cate.findAll(); // Récupération de toutes les catégories
+	    model.addAttribute("categories", categories); // Ajout de la liste des catégories au modèle
+	    return "client/accueil"; // Chemin vers la vue des catégories
+	}
 	
 	@GetMapping({"/create"})
 	public String showCreatePage(Model model) {
@@ -46,7 +80,6 @@ public class ProductsController {
 		Product product = new Product();
         product.setName(productDto.getName());
         product.setBrand(productDto.getBrand());
-        product.setCategory(productDto.getCategory());
         product.setPrice(productDto.getPrice());
         product.setDescription(productDto.getDescription());
         product.setCreatedAt(productDto.getCreatedAt());
