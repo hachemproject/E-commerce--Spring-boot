@@ -23,7 +23,7 @@ public class Product {
 	
 	
 	@ManyToOne
-    private Category cat;
+	private Category cat;
 
 	private double price;
 	

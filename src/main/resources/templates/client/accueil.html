@@ -14,14 +14,14 @@
     rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="./css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="./css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="./css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
 </head>
 
 <body>
@@ -101,15 +101,13 @@
                         <ul>
                             <li class="active"><a href="./index.html">Home</a></li>
                             <li><a href="./shop.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
+							<li><a href="#">Categories</a>
+							        <ul class="dropdown" th:if="${category != null}">
+							            <li th:each="category : ${category}">
+							                <a th:href="#" th:text="${category.name}">Category Name</a>
+							            </li>
+							        </ul>
+							    </li>
                             <li><a href="./blog.html">Blog</a></li>
                             <li><a href="./contact.html">Contacts</a></li>
                         </ul>
@@ -192,31 +190,24 @@
                 </div>
             </div>
             <div class="row product__filter">
-                
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals" th:each="product : ${product}">
-                    <div class="product__item" >
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                            <span class="label" th:text="${product.category.name}"></span>
-                            <ul class="product__hover">
-                                <li><a ><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a ><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a ><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6 th:text="${product.name}"></h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            
-                            <h5 th:text="${product.price + ' $'}"></h5>
-							
-							
-							
-                            
-                        </div>
-                    </div>
-                </div>
-                
+    <div class="col-lg-3 col-md-6 col-sm-6 mix new-arrivals" th:each="product : ${products}">
+        <div class="product__item">
+                <span class="label" th:text="${product.category != null ? product.category.name : 'Aucune catégorie'}"></span>
+                <ul class="product__hover">
+                    <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
+                    <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                    <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                </ul>
             </div>
+            <div class="product__item__text">
+                <h6 th:text="${product.name}"></h6>
+                <a href="#" class="add-cart">+ Add To Cart</a>
+                <h5 th:text="${product.price + ' $'}"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </section>
     <!-- Product Section End -->

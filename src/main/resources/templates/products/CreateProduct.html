@@ -8,36 +8,40 @@
 <body>
     <div class="container">
         <h2 class="mt-4 mb-4">Ajouter un nouveau produit</h2>
-		<form th:action="@{/a/create}" th:object="${productDto}" method="post">
+        <form th:action="@{/a/create}" th:object="${productDto}" method="post">
             <div class="form-group">
                 <label for="name">Nom du produit</label>
-                <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Entrez le nom du produit" >
-				<p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Le nom du produit est requis</p>
+                <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Entrez le nom du produit" required>
+                <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Le nom du produit est requis</p>
             </div>
 
             <div class="form-group">
                 <label for="brand">Marque</label>
-                <input type="text" id="brand" class="form-control" th:field="*{brand}" placeholder="Entrez la marque" >
+                <input type="text" id="brand" class="form-control" th:field="*{brand}" placeholder="Entrez la marque" required>
             </div>
 
             <div class="form-group">
-                <label for="category">Catégorie</label>
-                <input type="text" id="category" class="form-control" th:field="*{category}" placeholder="Entrez la catégorie" >
+                <label for="categoryId">Catégorie (ID)</label>
+                <input type="number" id="categoryId" class="form-control" th:field="*{category.id}" placeholder="Entrez l'ID de la catégorie" required>
+                <p class="text-danger" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}">L'ID de la catégorie est requis</p>
             </div>
 
             <div class="form-group">
                 <label for="price">Prix</label>
-                <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}" placeholder="Entrez le prix" >
+                <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}" placeholder="Entrez le prix" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" class="form-control" th:field="*{description}" rows="3" placeholder="Entrez une description"></textarea>
+                <textarea id="description" class="form-control" th:field="*{description}" rows="3" placeholder="Entrez une description" required></textarea>
             </div>
-			<div class="form-group">
-			                <label for="createdAt">createdAt</label>
-			                <input type="date" step="0.01" id="createdAt" class="form-control" th:field="*{createdAt}" placeholder="Entrez le createdAt" >
-			            </div>
+
+            <div class="form-group">
+                <label for="createdAt">Date de création</label>
+                <input type="date" id="createdAt" class="form-control" th:field="*{createdAt}" required>
+            </div>
+
+           
 
             <button type="submit" class="btn btn-primary">Ajouter le produit</button>
         </form>
