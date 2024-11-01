@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <h2 class="mt-4 mb-4">Ajouter un nouveau produit</h2>
-        <form th:action="@{/a/create}" th:object="${productDto}" method="post">
+        <form th:action="@{/accueil/create}" th:object="${productDto}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Nom du produit</label>
                 <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Entrez le nom du produit" required>
@@ -40,7 +40,10 @@
                 <label for="createdAt">Date de création</label>
                 <input type="date" id="createdAt" class="form-control" th:field="*{createdAt}" required>
             </div>
-
+			<div class="form-group">
+			                <label for="image">Image</label>
+			                <input type="file" id="image" th:field="*{image}" accept="image/*" class="form-control-file" required />
+			            </div>
            
 
             <button type="submit" class="btn btn-primary">Ajouter le produit</button>

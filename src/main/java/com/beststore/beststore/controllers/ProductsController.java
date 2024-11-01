@@ -1,6 +1,8 @@
 package com.beststore.beststore.controllers;
 
 import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,10 +42,12 @@ public class ProductsController {
 	public String showProductList(Model model) {
 	    List<Product> products = repo.findAll();
 	    List<ProductDto> productDTOs = products.stream().map(this::convertToDTO).collect(Collectors.toList());
-	    
+	   List<Category> categories = cate.findAll();
+	    model.addAttribute("categories", categories);
 	    model.addAttribute("products", productDTOs);
 	    return "client/accueil"; 
 	}
+
 
 	private ProductDto convertToDTO(Product product) {
 	    ProductDto dto = new ProductDto();
@@ -64,7 +68,7 @@ public class ProductsController {
 	}
 	
 	
-	
+	/*
 	@GetMapping({"/category"})
 	public String showCategoryList(Model model) {
 	    List<Category> category = cate.findAll();
@@ -72,7 +76,7 @@ public class ProductsController {
 	    return "client/accueil"; 
 	}
 	
-	
+	*/
 	
 	@GetMapping({"/create"})
 	public String showCreatePage(Model model) {
@@ -83,20 +87,31 @@ public class ProductsController {
 
 	@PostMapping("/create")
 	public String addProduct(@ModelAttribute("productDto") ProductDto productDto) {
-		Product product = new Product();
+	    Product product = new Product();
 
+	    // Récupération de la catégorie
 	    Integer categoryId = productDto.getCategory().getId();
-	    Category category = cate.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
+	    Category category = cate.findById(categoryId)
+	        .orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
 	    product.setCategory(category); 
 
+	    // Remplissage des détails du produit
 	    product.setName(productDto.getName());
 	    product.setBrand(productDto.getBrand());
 	    product.setPrice(productDto.getPrice());
 	    product.setDescription(productDto.getDescription());
 	    product.setCreatedAt(productDto.getCreatedAt());
 
-	    repo.save(product); 
-	    return "redirect:/accueil";
-	    }
+	    MultipartFile imageFile = productDto.getImage();
+	    
+	    
+	            String imagePath = "C:/path/to/your/project/src/main/resources/static/images/" + imageFile.getOriginalFilename();
+	            File file = new File(imagePath);
+	            product.setImageFileName(imageFile.getOriginalFilename());
+	            System.out.println("Image enregistrée avec succès : " + imagePath);
+	    repo.save(product);
+	    return "redirect:/accueil"; 
+	}
+
 
 }

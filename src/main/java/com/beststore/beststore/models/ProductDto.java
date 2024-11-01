@@ -13,6 +13,7 @@ public class ProductDto {
     private Date createdAt;
     private String imageFileName; 
     private CategoryDTO category;
+    private MultipartFile image;
 
     public int getId() {
         return id;
@@ -76,6 +77,14 @@ public class ProductDto {
 
 	public void setCategory(CategoryDTO category) {
 		this.category = category;
+	}
+
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 
 	

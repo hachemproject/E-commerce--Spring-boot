@@ -96,23 +96,23 @@
                         <a href="./index.html"><img src="img/logo.png" alt=""></a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop.html">Shop</a></li>
-							<li><a href="#">Categories</a>
-							        <ul class="dropdown" th:if="${category != null}">
-							            <li th:each="category : ${category}">
-							                <a th:href="#" th:text="${category.name}">Category Name</a>
-							            </li>
-							        </ul>
-							    </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
-                        </ul>
-                    </nav>
-                </div>
+				<div class="col-lg-6 col-md-6">
+				                    <nav class="header__menu mobile-menu">
+				                        <ul>
+				                            <li class="active"><a href="./index.html">Home</a></li>
+				                            <li><a href="./shop.html">Shop</a></li>
+											<li><a href="#">Catégories</a>
+											    <ul class="dropdown">
+											        <li th:each="category : ${categories}">
+											            <a href="#" th:text="${category.name}">Nom de la catégorie</a>
+											        </li>
+											    </ul>
+											</li>
+				                            <li><a href="./blog.html">Blog</a></li>
+				                            <li><a href="./contact.html">Contacts</a></li>
+				                        </ul>
+				                    </nav>
+				                </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
@@ -203,6 +203,9 @@
                 <h6 th:text="${product.name}"></h6>
                 <a href="#" class="add-cart">+ Add To Cart</a>
                 <h5 th:text="${product.price + ' $'}"></h5>
+				<h5 th:text="${product.price + ' $'}"></h5>
+				<h5 th:text="${product.category.name}"></h5> <!-- Affichage du nom de la catégorie -->
+
             </div>
         </div>
     </div>
@@ -210,6 +213,11 @@
 
         </div>
     </section>
+	
+	<h4>Catégories disponibles</h4>
+	<ul>
+	    <li th:each="category : ${categories}" th:text="${category.name}">Nom de la catégorie</li>
+	</ul>
     <!-- Product Section End -->
 
     <!-- Categories Section Begin -->
