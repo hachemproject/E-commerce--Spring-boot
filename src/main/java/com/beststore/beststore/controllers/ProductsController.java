@@ -112,6 +112,7 @@ public class ProductsController {
 	    repo.save(product);
 	    return "redirect:/accueil"; 
 	}
-
+	
+	
 
 }

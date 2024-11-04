@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un produit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4 mb-4">Ajouter un nouveau produit</h2>
+        <form th:action="@{/dashbord/create}" th:object="${productDto}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Nom du produit</label>
+                <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Entrez le nom du produit" required>
+                <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Le nom du produit est requis</p>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Marque</label>
+                <input type="text" id="brand" class="form-control" th:field="*{brand}" placeholder="Entrez la marque" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoryId">Catégorie (ID)</label>
+                <input type="number" id="categoryId" class="form-control" th:field="*{category.id}" placeholder="Entrez l'ID de la catégorie" required>
+                <p class="text-danger" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}">L'ID de la catégorie est requis</p>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Prix</label>
+                <input type="number" step="0.01" id="price" class="form-control" th:field="*{price}" placeholder="Entrez le prix" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" th:field="*{description}" rows="3" placeholder="Entrez une description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="createdAt">Date de création</label>
+                <input type="date" id="createdAt" class="form-control" th:field="*{createdAt}" required>
+            </div>
+			<div class="form-group">
+			                <label for="image">Image</label>
+			                <input type="file" id="image" th:field="*{image}" accept="image/*" class="form-control-file" required />
+			            </div>
+           
+
+            <button type="submit" class="btn btn-primary">Ajouter le produit</button>
+        </form>
+    </div>
+</body>
+</html>
