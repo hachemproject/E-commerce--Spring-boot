@@ -78,13 +78,12 @@ public class DashbordController {
 	public String addProduct(@ModelAttribute("productDto") ProductDto productDto) {
 	    Product product = new Product();
 
-	    // Récupération de la catégorie
+	    //recuperir de la catégorie
 	    Integer categoryId = productDto.getCategory().getId();
-	    Category category = cate.findById(categoryId)
-	        .orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
+	    Category category = cate.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
 	    product.setCategory(category); 
 
-	    // Remplissage des détails du produit
+	    //remplir des détails du produit
 	    product.setName(productDto.getName());
 	    product.setBrand(productDto.getBrand());
 	    product.setPrice(productDto.getPrice());
@@ -92,14 +91,31 @@ public class DashbordController {
 	    product.setCreatedAt(productDto.getCreatedAt());
 
 	    MultipartFile imageFile = productDto.getImage();
-	    
-	    
-	            String imagePath = "C:/path/to/your/project/src/main/resources/static/images/" + imageFile.getOriginalFilename();
+
+	    if (imageFile != null && !imageFile.isEmpty()) {
+	        try {
+	            //le chemin de l'image
+	        	 String imagePath = "C:/path/to/your/project/src/main/resources/static/images/" + imageFile.getOriginalFilename();
 	            File file = new File(imagePath);
+                //enregistrer l'image dans le dossier
+	            imageFile.transferTo(file);
+
+	            //enregistrer le nom de l'image dans l'entité
 	            product.setImageFileName(imageFile.getOriginalFilename());
+
 	            System.out.println("Image enregistrée avec succès : " + imagePath);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println("Erreur lors de l'enregistrement de l'image.");
+	        }
+	    } else {
+	        System.out.println("Aucune image fournie.");
+	    }
 	    repo.save(product);
+
 	    return "redirect:/dashbord"; 
+	
+
 	}
 	
 	
