@@ -55,13 +55,16 @@ public class DashbordController {
 	    dto.setCreatedAt(product.getCreatedAt());
 	    dto.setImageFileName(product.getImageFileName());
 
-	        CategoryDTO categoryDto = new CategoryDTO();
-	        categoryDto.setId(product.getCategory().getId());
-	        categoryDto.setName(product.getCategory().getName());
-	        dto.setCategory(categoryDto); 
-	    
-       return dto;
+	    // Convertir Category en CategoryDTO
+	    CategoryDTO categoryDto = new CategoryDTO();
+	    categoryDto.setId(product.getCategory().getId());  // Récupérer l'ID de la catégorie
+	    categoryDto.setName(product.getCategory().getName());  // Récupérer le nom de la catégorie
+	    dto.setCategory(categoryDto);  // Assigner le CategoryDTO au ProductDto
+
+	    return dto;
 	}
+
+
 	
 	
 	
@@ -70,6 +73,8 @@ public class DashbordController {
 	public String showCreatePage(Model model) {
 	    ProductDto productDto = new ProductDto();
 	    model.addAttribute("productDto", productDto); 
+	    List<Category> categories = cate.findAll();
+	    model.addAttribute("categories", categories);
 	    return "dashbord/create"; 
 
 	}
@@ -81,8 +86,11 @@ public class DashbordController {
 	    //recuperir de la catégorie
 	    Integer categoryId = productDto.getCategory().getId();
 	    Category category = cate.findById(categoryId).orElseThrow(() -> new IllegalArgumentException("Catégorie non trouvée"));
-	    product.setCategory(category); 
+	    
+	    //Category category = productDto.getCategory();
 
+	    // Assigner la catégorie à l'objet product
+	    product.setCategory(category);
 	    //remplir des détails du produit
 	    product.setName(productDto.getName());
 	    product.setBrand(productDto.getBrand());
@@ -94,8 +102,8 @@ public class DashbordController {
 
 	    if (imageFile != null && !imageFile.isEmpty()) {
 	        try {
-	            //le chemin de l'image
-	        	 String imagePath = "C:/path/to/your/project/src/main/resources/static/images/" + imageFile.getOriginalFilename();
+	            //le chemin de l'image 
+	        	 String imagePath = "D:\\3eme\\JEE\\TP\\E-commerce--Spring-boot\\src\\main\\resources\\static\\images/" + imageFile.getOriginalFilename();
 	            File file = new File(imagePath);
                 //enregistrer l'image dans le dossier
 	            imageFile.transferTo(file);

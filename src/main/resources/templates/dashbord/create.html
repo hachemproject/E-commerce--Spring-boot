@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+	
+	
     <div class="container">
         <h2 class="mt-4 mb-4">Ajouter un nouveau produit</h2>
         <form th:action="@{/dashbord/create}" th:object="${productDto}" method="post" enctype="multipart/form-data">
@@ -20,11 +22,18 @@
                 <input type="text" id="brand" class="form-control" th:field="*{brand}" placeholder="Entrez la marque" required>
             </div>
 
-            <div class="form-group">
-                <label for="categoryId">Catégorie (ID)</label>
-                <input type="number" id="categoryId" class="form-control" th:field="*{category.id}" placeholder="Entrez l'ID de la catégorie" required>
-                <p class="text-danger" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}">L'ID de la catégorie est requis</p>
-            </div>
+			
+			
+			
+
+			<div class="form-group">
+			               <label for="categoryId">Catégorie (ID)</label>
+			               <input type="number" id="categoryId" class="form-control" th:field="*{category.id}" placeholder="Entrez l'ID de la catégorie" required>
+			               <p class="text-danger" th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}">L'ID de la catégorie est requis</p>
+			           </div>
+			
+			
+			
 
             <div class="form-group">
                 <label for="price">Prix</label>

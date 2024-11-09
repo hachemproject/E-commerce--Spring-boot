@@ -38,7 +38,22 @@
                 <label for="createdAt">Date de création</label>
                 <input type="date" id="createdAt" class="form-control" th:field="*{createdAt}" required>
             </div>
+			
+			<div class="form-group">
+			       <label for="image">Image</label>
 
+			       <!-- Affichage de l'image actuelle (si elle existe) -->
+			       <div>
+			           <img th:if="${product.imageFileName != null}" 
+			                th:src="@{/images/{imageName}(imageName=${product.imageFileName})}" 
+			                alt="Image actuelle" 
+			                style="max-width: 200px; max-height: 200px;" />
+			       </div>
+
+			       <!-- Champ pour télécharger une nouvelle image -->
+			</div>			  
+			
+			
             <button type="submit" class="btn btn-primary">Modifier le produit</button>
         </form>
     </div>
